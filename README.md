@@ -13,6 +13,8 @@
   </p>
 </div>
 
+<img width="2549" height="1265" alt="screenshot" src="https://github.com/user-attachments/assets/5a2f284e-a25f-49a6-a5e2-7d6b1fc4dfce" />
+
 ---
 
 ## 📝 À propos
