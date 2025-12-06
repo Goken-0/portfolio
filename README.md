@@ -11,9 +11,6 @@
       <img src="https://img.shields.io/badge/Voir_le_site_en_ligne-000000?style=for-the-badge&logo=github&logoColor=white" alt="Live Demo">
     </a>
   </p>
-
-  <img src="https://via.placeholder.com/800x400?text=Aperçu+du+Portfolio+de+Goken-0" alt="Aperçu du Portfolio" width="100%">
-
 </div>
 
 ---
