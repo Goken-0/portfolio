@@ -28,19 +28,19 @@ class MusicPlayer {
         // PLAYLIST AVEC MES FICHIERS
         this.playlist = [
             {
-                title: "Black Beatles",
-                artist: "Rae Sremmurd, Gucci Mane",
-                src: "./assets/music/blackbeatles.mp3" // Utilisez ./ au début
+                title: "Nightcall",
+                artist: "Kavinsky",
+                src: "./assets/music/nightcall.mp3" // Utilisez ./ au début
             },
             {
-                title: "Timeless",
-                artist: "The Weeknd, Playboi Carti",
-                src: "./assets/music/timeless.mp3"
+                title: "Blinding Lights",
+                artist: "The Weeknd",
+                src: "./assets/music/blindinglights.mp3"
             },
             {
-                title: "Robbery",
-                artist: "Juice WRLD",
-                src: "./assets/music/robbery.mp3"
+                title: "Instant Crush",
+                artist: "Daft Punk",
+                src: "./assets/music/instantcrush.mp3"
             }
         ];
 
