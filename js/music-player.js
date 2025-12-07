@@ -235,6 +235,10 @@ class MusicPlayer {
                 // On restaure l'apparence (boutons actifs, etc.)
                 this.restoreVisualState();
 
+                // On met à jour l'état du bouton play et de l'égaliseur selon l'état sauvegardé
+                this.isPlaying = state.isPlaying || false;
+                this.updatePlayButton();
+
                 // Si la musique était en train de jouer, on essaie de la relancer
                 if (state.isPlaying) {
                     // Les navigateurs bloquent parfois l'autoplay (pour éviter les pubs bruyantes)
@@ -259,6 +263,9 @@ class MusicPlayer {
                 this.currentSongIndex = 0;
                 this.loadCurrentSong(false);
                 this.setVolume(30);
+                // On s'assure que l'égaliseur est désactivé
+                this.isPlaying = false;
+                this.updatePlayButton();
             }
         } else {
             // C'est la première fois qu'on charge le site
@@ -266,6 +273,9 @@ class MusicPlayer {
             this.currentSongIndex = 0;
             this.loadCurrentSong(false);
             this.setVolume(30);
+            // On s'assure que l'égaliseur est désactivé au démarrage
+            this.isPlaying = false;
+            this.updatePlayButton();
         }
     }
 
