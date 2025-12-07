@@ -719,13 +719,26 @@ span {
 
 /*POSITIONNEMENT DE LA PHRASE DE C#3caee4IT*/
 .credit {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: transparent;
-    padding: 24px 32px;
-    font-size: 1.2rem;
-    opacity: 0.85;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 24px 32px !important;
+    font-size: 1.2rem !important;
+    opacity: 0.85 !important;
+    z-index: 1000 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    transform: translateY(0) !important;
+    transition: transform 0.3s ease-in-out !important;
+}
+
+/* Classe pour cacher le footer lors du scroll */
+.credit.hidden {
+    transform: translateY(100%) !important;
 }
 
 /* Conteneur principal centré */
