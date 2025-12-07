@@ -13,7 +13,7 @@
   </p>
 </div>
 
-<img width="2556" height="1268" alt="screenshot" src="https://github.com/user-attachments/assets/862d107a-7f7b-4fcf-bdce-e14796c5dbd2" />
+<img width="2555" height="1264" alt="screenshotpng" src="https://github.com/user-attachments/assets/30532853-4f97-4c70-8bf4-4b6f3f787513" />
 
 ---
 
