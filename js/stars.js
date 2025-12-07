@@ -106,7 +106,7 @@ const colors = [0xffffff, 0xffffaa, 0xaaffff, 0xffaaff, 0xaaffaa];
  */
 function createShootingStar() {
     // Noyau lumineux (la partie principale de l'étoile)
-    const coreGeometry = new THREE.SphereGeometry(3, 16, 16);  // Sphère de rayon 3 (réduit de 6)
+    const coreGeometry = new THREE.SphereGeometry(2, 16, 16);  // Sphère de rayon 2 (réduit encore)
     const coreColor = colors[Math.floor(Math.random() * colors.length)];  // Couleur aléatoire
     const coreMaterial = new THREE.MeshBasicMaterial({
         color: coreColor,
@@ -116,7 +116,7 @@ function createShootingStar() {
     const core = new THREE.Mesh(coreGeometry, coreMaterial);
     
     // Halo extérieur (effet de lueur autour du noyau)
-    const haloGeometry = new THREE.SphereGeometry(6, 16, 16);  // Plus grand que le noyau (réduit de 12)
+    const haloGeometry = new THREE.SphereGeometry(4, 16, 16);  // Plus grand que le noyau (réduit à 4)
     const haloMaterial = new THREE.MeshBasicMaterial({
         color: coreColor,
         transparent: true,
@@ -127,22 +127,24 @@ function createShootingStar() {
     // Position initiale aléatoire
     const startX = Math.random() > 0.5 ? 1500 : -1500;  // Soit à gauche, soit à droite
     const startY = Math.random() * 1000 + 500;          // Entre 500 et 1500 en hauteur
-    const startZ = (Math.random() - 0.5) * 2000;        // Profondeur aléatoire
+    // Limiter la profondeur Z pour éviter que les étoiles soient trop proches de la caméra (z=800)
+    // Garder les étoiles entre 200 et 600 devant la caméra pour une taille raisonnable
+    const startZ = 800 - (Math.random() * 400 + 200);  // Entre 200 et 600 devant la caméra
     
     core.position.set(startX, startY, startZ);
     halo.position.copy(core.position);  // Le halo suit le noyau
     
-    // Vitesse de déplacement (diagonale avec variation)
+    // Vitesse de déplacement (diagonale avec variation) - réduite pour un mouvement plus fluide
     const velocity = new THREE.Vector3(
-        startX > 0 ? -(Math.random() * 6 + 8) : (Math.random() * 6 + 8),  // Vers le centre
-        -(Math.random() * 8 + 6),  // Vers le bas
-        (Math.random() - 0.5) * 2   // Légère variation en profondeur
+        startX > 0 ? -(Math.random() * 4 + 5) : (Math.random() * 4 + 5),  // Vers le centre (réduit)
+        -(Math.random() * 5 + 4),  // Vers le bas (réduit)
+        (Math.random() - 0.5) * 1   // Légère variation en profondeur (réduit)
     );
     
     // Créer plusieurs traînées lumineuses (effet de queue)
     const trails = [];
-    const trailCount = 5;      // Nombre de traînées
-    const trailLength = 300;   // Longueur de chaque traînée
+    const trailCount = 3;      // Nombre de traînées (réduit de 5 à 3)
+    const trailLength = 200;   // Longueur de chaque traînée (réduit de 300 à 200)
     
     for (let i = 0; i < trailCount; i++) {
         const trailGeometry = new THREE.BufferGeometry();
@@ -176,21 +178,21 @@ function createShootingStar() {
     
     // Particules sparkles (petites particules qui brillent autour)
     const sparkleGeometry = new THREE.BufferGeometry();
-    const sparkleCount = 20;
+    const sparkleCount = 15;  // Réduit de 20 à 15
     const sparklePositions = new Float32Array(sparkleCount * 3);
     
-    // Positionner les particules autour du noyau
+    // Positionner les particules autour du noyau (zone plus petite)
     for (let i = 0; i < sparkleCount * 3; i += 3) {
-        sparklePositions[i] = core.position.x + (Math.random() - 0.5) * 50;
-        sparklePositions[i + 1] = core.position.y + (Math.random() - 0.5) * 50;
-        sparklePositions[i + 2] = core.position.z + (Math.random() - 0.5) * 50;
+        sparklePositions[i] = core.position.x + (Math.random() - 0.5) * 30;  // Réduit de 50 à 30
+        sparklePositions[i + 1] = core.position.y + (Math.random() - 0.5) * 30;
+        sparklePositions[i + 2] = core.position.z + (Math.random() - 0.5) * 30;
     }
     
     sparkleGeometry.setAttribute("position", new THREE.BufferAttribute(sparklePositions, 3));
     
     const sparkleMaterial = new THREE.PointsMaterial({
         color: coreColor,
-        size: 2,  // Réduit de 3 à 2 pour des particules plus petites
+        size: 1.5,  // Réduit encore à 1.5 pour des particules plus petites
         transparent: true,
         opacity: 0.8
     });
@@ -235,9 +237,9 @@ setInterval(() => {
 setInterval(() => {
     if (Math.random() < 0.30) {
         console.log("🌟 Pluie d'étoiles filantes !");
-        // Créer 8 étoiles filantes avec un léger décalage
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => createShootingStar(), i * 200);
+        // Créer 5 étoiles filantes avec un léger décalage (réduit de 8 à 5)
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => createShootingStar(), i * 250);  // Délai augmenté de 200 à 250ms
         }
     }
 }, 15000);
@@ -285,6 +287,13 @@ function animateStars() {
         star.core.position.add(star.velocity);
         star.halo.position.copy(star.core.position);  // Le halo suit le noyau
         
+        // Supprimer l'étoile si elle sort de l'écran (optimisation)
+        if (star.core.position.x < -2000 || star.core.position.x > 2000 ||
+            star.core.position.y < -2000 || star.core.position.y > 2000 ||
+            star.core.position.z < 0 || star.core.position.z > 1000) {
+            star.life = 0;  // Forcer la suppression
+        }
+        
         // Mettre à jour les traînées (elles doivent suivre l'étoile)
         star.trails.forEach((trail, trailIndex) => {
             const trailPoints = [];
@@ -295,7 +304,7 @@ function animateStars() {
             for (let j = 0; j < segmentCount; j++) {
                 const progress = j / (segmentCount - 1);
                 const trailPos = star.core.position.clone().add(
-                    star.velocity.clone().normalize().multiplyScalar(-(300 + offset) * progress)
+                    star.velocity.clone().normalize().multiplyScalar(-(200 + offset) * progress)  // Réduit de 300 à 200
                 );
                 trailPoints.push(trailPos);
             }
